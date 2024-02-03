@@ -15,11 +15,8 @@
 
   <ItemGroup>
     <Folder Include="Controllers\NewFolder\" />
-    <Folder Include="DAO\" />
-    <Folder Include="DBContext\" />
     <Folder Include="Interfaces\Abstract_Factory\" />
     <Folder Include="Interfaces\Clases_Concretas\" />
-    <Folder Include="DTO\" />
   </ItemGroup>
 
 </Project>

@@ -15,8 +15,6 @@
 
   <ItemGroup>
     <Folder Include="Controllers\NewFolder\" />
-    <Folder Include="Interfaces\Abstract_Factory\" />
-    <Folder Include="Interfaces\Clases_Concretas\" />
   </ItemGroup>
 
 </Project>

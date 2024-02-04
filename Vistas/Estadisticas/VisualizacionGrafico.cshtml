@@ -1,0 +1,16 @@
+﻿@model IEnumerable<ArquitecturaG1.Modelos.EstadisticaIdioma>
+@{
+    var tipoGrafico = ViewBag.TipoGrafico as string;
+}
+
+<div id="graficoContainer">
+    <!-- Aquí iría la lógica para renderizar el gráfico, ya sea de barras o pastel.
+         Podrías usar una librería de JavaScript como Chart.js para esto.
+         Este ejemplo no incluye el código específico de JavaScript para generar los gráficos. -->
+    <p>Gráfico de tipo @tipoGrafico para el país seleccionado.</p>
+    <!-- Ejemplo básico de cómo podrías estructurar los datos para la librería de gráficos -->
+    <script>
+        var datosGrafico = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(m => new { Idioma = m.Idioma, Porcentaje = m.Porcentaje })));
+        // Lógica de JavaScript para renderizar el gráfico con los datos proporcionados
+    </script>
+</div>

@@ -1,0 +1,35 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "Estadísticas de Idiomas por País";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<!-- Formulario para seleccionar país y tipo de gráfico -->
+@using (Html.BeginForm("Index", "Estadisticas", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label for="paisSeleccionado">Seleccione un país:</label>
+        @Html.DropDownListFor(m => m.PaisSeleccionado, Model.ListaPaises, "Seleccione un país", new { @class = "form-control", @id = "paisSeleccionado" })
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Mostrar Estadísticas" class="btn btn-primary" />
+    </div>
+}
+
+<!-- Contenedor para el gráfico -->
+<div id="contenedorGrafico">
+    @Html.Partial("_VisualizacionGrafico", Model)
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        // Aquí puedes añadir JavaScript para manejar la interacción de la UI, como cargar el gráfico dinámicamente
+    </script>
+}

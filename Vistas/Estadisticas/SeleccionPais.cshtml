@@ -1,0 +1,11 @@
+﻿@model IEnumerable<ArquitecturaG1.Modelos.Pais>
+
+<div class="form-group">
+    <label for="paisId">Seleccione un país:</label>
+    <select name="paisId" id="paisId" class="form-control">
+        @foreach (var pais in Model)
+        {
+            <option value="@pais.Id">@pais.Nombre</option>
+        }
+    </select>
+</div>

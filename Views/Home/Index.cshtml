@@ -1,0 +1,55 @@
+﻿                                 <!--Pagina principal -->
+@using ArquitecturaG1.Models.DTO
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Idiomas por País</title>
+    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet">
+    <link href="~/css/site.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+</head>
+<body>
+
+
+    <h1>Lista de Idiomas por País</h1>
+
+    <div class="search-container">
+        <input type="text" id="nombrePais" placeholder="Buscar país..." autocomplete="off">
+        <button id="buscarPaisesBtn">Buscar</button>
+    </div>
+
+    <div class="container">
+        <div class="table-container">
+            <table id="tablaIdiomas">
+                <thead>
+                    <tr>
+                        <th>Idioma</th>
+                        <th>Oficial</th>
+                        <th>Porcentaje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Los datos de los idiomas se llenarán aquí -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="chart-container" style="position: relative; height:40vh;">
+            <canvas id="idiomasChart"></canvas>
+        </div>
+    </div>
+
+    <script src="~/js/functions.js"></script>
+
+</body>
+</html>

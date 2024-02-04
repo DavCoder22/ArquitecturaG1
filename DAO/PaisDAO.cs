@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ArquitecturaG1.DTO;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ArquitecturaG1.DAO
+/*namespace ArquitecturaG1.DAO
 {
-    public class p1 : Controller
+    public class PaisDAO : Controller
     {
         // GET: p1
         public ActionResult Index()
@@ -80,4 +81,19 @@ namespace ArquitecturaG1.DAO
             }
         }
     }
+}*/
+using System.Collections.Generic;
+
+public class PaisDAO
+{
+    public static List<PaisDTO> ObtenerPaises()
+    {
+        return new List<PaisDTO>
+        {
+            new PaisDTO { Id = 1, Nombre = "País A" },
+            new PaisDTO { Id = 2, Nombre = "País B" }
+            // Agrega más países según necesites
+        };
+    }
 }
+

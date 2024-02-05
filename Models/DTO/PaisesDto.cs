@@ -1,8 +1,9 @@
-﻿using System;
+﻿using ArquitecturaG1.Models.DAO;
+using System;
 
 namespace ArquitecturaG1.Models.DTO
 {
-    public class PaisesDto
+    public class PaisesDto : IPaisesDto
     {
         //Declarando los atributos
         private string _name;
@@ -20,4 +21,6 @@ namespace ArquitecturaG1.Models.DTO
         public string Localname { get => _localname; set => _localname = value; }
         public int Capital { get => _capital; set => _capital = value; }
     }
+
+
 }

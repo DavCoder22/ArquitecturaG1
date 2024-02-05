@@ -1,0 +1,77 @@
+﻿@* @using ArquitecturaG1.Models.DTO
+@{
+    ViewData["Title"] = "Bienvenido Usuario";
+    Layout = null;
+}
+@model PaisesDto
+@{
+    var listaPaises = (List<PaisesDto>)ViewData["ListaPaises"];
+}
+ *@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" type="text/css" href="~/css/Style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('../img/family3.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mensaje {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-size: 24px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .botones {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .boton {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+            .boton:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+    <div class="mensaje">
+        <h1 class="title">Bienvenido Paciente</h1>
+    </div>
+
+
+
+
+@* 
+    <div>
+        <a href="@Url.Action("Index", "Home")" role="button" class="button-36" style="height: 65px; line-height: 65px;">Volver</a>
+    </div> *@
+
+</body>
+</html>

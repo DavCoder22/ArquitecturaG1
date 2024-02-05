@@ -8,9 +8,9 @@ using System.Data.SqlClient;
 using ArquitecturaG1.DBContext;
 using ArquitecturaG1.Models.DTO;
 
-namespace ArquitecturaG1.DAO
+namespace ArquitecturaG1.Models.DAO
 {
-    internal class PaisesDao : ConexionDBPaises
+    internal class PaisesDao : ConexionDBPaises, IPaisesDao
     {
         //Se declara el SqlReader para leer las filas
         static SqlDataReader LeerFilas;
@@ -51,4 +51,6 @@ namespace ArquitecturaG1.DAO
         }
 
     }
+
+
 }

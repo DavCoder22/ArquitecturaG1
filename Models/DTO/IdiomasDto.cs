@@ -1,11 +1,12 @@
-﻿using System;
+﻿using ArquitecturaG1.Models.DAO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 namespace ArquitecturaG1.Models.DTO
 {
-    public class IdiomasDto
+    public class IdiomasDto : IIdiomasDto
     {
         //Atributos de la base idiomas
         private string _CountryCode;
@@ -20,4 +21,6 @@ namespace ArquitecturaG1.Models.DTO
         public decimal Percentage { get => _Percentage; set => _Percentage = value; }
 
     }
+
+    
 }

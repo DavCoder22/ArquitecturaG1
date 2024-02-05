@@ -1,11 +1,12 @@
 ﻿using ArquitecturaG1.DBContext;
 using ArquitecturaG1.Models.DTO;
+//using ArquitecturaG1.Models.IDaoInterfaces;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace ArquitecturaG1.DAO
+namespace ArquitecturaG1.Models.DAO
 {
-    internal class IdiomasDao : ConexionDBIdiomas
+    internal class IdiomasDao : ConexionDBIdiomas , IIdiomasDao
     {
         //Se declara un SqlReader para leer las filas
         SqlDataReader LeerFilas;
@@ -39,4 +40,5 @@ namespace ArquitecturaG1.DAO
             return ListaSerializada;
         }
     }
+
 }

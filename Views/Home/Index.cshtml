@@ -1,8 +1,72 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using ArquitecturaG1.Models.DTO
+@model PaisesDto
+
+@{
+    ViewData["Title"] = "Index";
+    var listaPaises = ViewData["ListaPaises"] as List<PaisesDto>;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @* intento de arreglo del no se encontraron result antes de empezar *@
+    @if (listaPaises != null)
+        @if (listaPaises.Any())
+        {
+            <h3>Resultados de la búsqueda:</h3>
+            <ul>
+                @foreach (var pais in listaPaises)
+                {
+                    <li>@pais.Name</li>
+                }
+            </ul>
+    
+        }
+
+    // para cuando no hay nada de citas
+    else if (!listaPaises.Any())
+    {
+        <div class="alert-box">
+            <img src="~/img/activo.png" class="alert-icon">
+            <h2 class="alert-text"> Verifica el pais ingresado </h2>
+        </div>
+
+    }
+
+
+          @*   intento de deshabilitar boton *@
+
+<h2>Estadisticas de Lenguajes de un País</h2>
+
+<div id="busquedaForm">
+    <form id="formBuscarPaises">
+        <label for="nombrePais">Nombre del País:</label>
+        <input type="text" id="nombrePais" name="NombrePais" />
+        <button type="button" onclick="buscarPaises()" id="btnBuscar">Buscar</button>
+    </form>
 </div>
+
+<script>
+    function buscarPaises() {
+        // Deshabilitar el botón después de hacer clic
+        $("#btnBuscar").prop("disabled", true);
+
+        var nombrePais = document.getElementById("nombrePais").value;
+
+        // Realizar la solicitud AJAX al servidor para buscar países
+        $.ajax({
+            url: "/Home/BuscarPaises",
+            type: "POST",
+            data: { nombrePais: nombrePais },
+            dataType: "html",
+            success: function (result) {
+                // Actualizar el contenido del div de resultados con los nuevos resultados
+                $("#resultadoBusqueda").html(result);
+            },
+            error: function (error) {
+                console.error("Error al realizar la búsqueda: ", error);
+            }
+
+        });
+    }
+</script>
+
+
+

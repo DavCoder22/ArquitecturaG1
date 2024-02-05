@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using ArquitecturaG1.DBContext;
-using ArquitecturaG1.DTO;
+using ArquitecturaG1.Models.DTO;
 
 namespace ArquitecturaG1.DAO
 {
@@ -22,8 +22,8 @@ namespace ArquitecturaG1.DAO
             Comando.Connection = Conexion;
             Comando.CommandText = "VerPaises";
             Comando.CommandType = CommandType.StoredProcedure;
-            if(name != null)
-            Comando.Parameters.AddWithValue("@CountryName", name);
+            if (name != null)
+                Comando.Parameters.AddWithValue("@Condition", name);
 
             Conexion.Open();
 

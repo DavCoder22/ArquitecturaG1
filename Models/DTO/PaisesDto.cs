@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace ArquitecturaG1.DTO
+namespace ArquitecturaG1.Models.DTO
 {
     public class PaisesDto
     {
-    //Declarando los atributos
+        //Declarando los atributos
         private string _name;
         private string _continent;
         private string _region;

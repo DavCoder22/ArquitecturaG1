@@ -1,11 +1,11 @@
 ﻿using ArquitecturaG1.DBContext;
-using ArquitecturaG1.DTO;
+using ArquitecturaG1.Models.DTO;
 using System.Data;
 using System.Data.SqlClient;
 
 namespace ArquitecturaG1.DAO
 {
-   internal class IdiomasDao : ConexionDBIdiomas
+    internal class IdiomasDao : ConexionDBIdiomas
     {
         //Se declara un SqlReader para leer las filas
         SqlDataReader LeerFilas;

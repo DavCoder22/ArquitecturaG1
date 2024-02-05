@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace ArquitecturaG1.DTO
+namespace ArquitecturaG1.Models.DTO
 {
     public class IdiomasDto
     {

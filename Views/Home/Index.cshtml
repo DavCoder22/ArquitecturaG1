@@ -1,4 +1,4 @@
-﻿@using ArquitecturaG1.Models.DTO
+﻿ @using ArquitecturaG1.Models.DTO
 @model IdiomasDto
 
 @{
@@ -32,6 +32,9 @@
 }
 
 
+<div id="resultadoBusqueda">
+    <!-- Aquí se mostrarán las estadísticas de idiomas para el país seleccionado -->
+</div>
 
 <div id="busquedaForm">
     <form id="formBuscarPaises">
@@ -42,8 +45,10 @@
 </div>
 
 
-
 <script>
+     var paisSeleccionado = ""; // Variable global para almacenar el país seleccionado
+
+
     function buscarPaises() {
         // Deshabilitar el botón después de hacer clic
         $("#btnBuscar").prop("disabled", true);
@@ -70,40 +75,17 @@
         });
     }
 
-
     function seleccionarPais(nombrePais) {
-        // Habilitar el botón de búsqueda después de seleccionar un país
-        $("#btnBuscar").prop("disabled", false);
+        // Asignar el valor seleccionado a la variable
+        paisSeleccionado = nombrePais;
 
-        // Mostrar estadísticas de idiomas para el país seleccionado
-        $.ajax({
-            url: "/Home/ObtenerEstadisticasIdiomas",
-            type: "POST",
-            data: { nombrePais: nombrePais },
-            dataType: "html",
-            success: function (result) {
-                // Actualizar el contenido del div de estadísticas con los nuevos resultados
-                $("#estadisticasIdioma").html(result);
-            },
-            error: function (error) {
-                console.error("Error al obtener estadísticas de idiomas: ", error);
-            }
-        });
+        // Puedes realizar acciones adicionales aquí si es necesario
+
+        // Ejemplo: Mostrar una alerta con el país seleccionado
+        alert("País seleccionado: " + paisSeleccionado);
     }
+
 </script>
-
-
-<div id="resultadoBusqueda">
-    <!-- Aquí se mostrarán las estadísticas de idiomas para el país seleccionado -->
-</div>
-
-
-
-
-
-
-
-
 
 @*                                                                                       IDIOMAS                                *@
 

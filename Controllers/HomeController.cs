@@ -61,8 +61,72 @@ namespace ArquitecturaG1.Controllers
 
 
 
-        
+        [HttpPost]
+        public IActionResult BuscarIdioma()
+        {
+            try
+            {
+                var listaIdiomas = new List<IdiomasDto>();
+                IdiomasDao idiomasDao = null;
 
+                idiomasDao = (IdiomasDao)_databaseFactory.CreateIdiomasDao();
+                listaIdiomas = idiomasDao.GetAllIdiomas();
+
+                // Puedes almacenar la lista en ViewData para que esté disponible en la vista
+                ViewData["ListaIdiomas"] = listaIdiomas;
+
+                // O también puedes devolver directamente la vista con la lista de idiomas
+                return View("MostrarIdiomas");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View("Index");
+            }
+      
+        }
+
+
+
+        [HttpPost]
+        public IActionResult MostrarData()
+        {
+            try
+            {
+                var listaIdiomas = new List<IdiomasDto>();
+                IdiomasDao idiomasDao = null;
+
+                try
+                {
+                    idiomasDao = (IdiomasDao)_databaseFactory.CreateIdiomasDao();
+                    listaIdiomas = idiomasDao.GetAllIdiomas();
+
+                    // Puedes almacenar la lista en ViewData para que esté disponible en la vista
+                    ViewData["ListaIdiomas"] = listaIdiomas;
+
+                    // O también puedes devolver directamente la vista con la lista de idiomas
+                    return View("Index");
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.ErrorMessage = ex.Message;
+                    return View("Index");
+                }
+                finally
+                {
+                    //// Asegúrate de liberar la referencia al objeto IdiomasDao en el bloque finally
+                    //if (idiomasDao != null)
+                    //{
+                    //    idiomasDao.Dispose();
+                    //}
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+                return View("Index");
+            }
+        }
 
 
 

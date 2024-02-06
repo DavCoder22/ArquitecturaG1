@@ -41,47 +41,75 @@ namespace ArquitecturaG1.Models.DAO
         }
 
 
-        //public List<IdiomasDto> VerIdiomasAgrupados()
-        //{
-        //    Comando.Connection = Conexion;
-        //    Comando.CommandText = "VerIdiomas";
-        //    Comando.CommandType = CommandType.StoredProcedure;
 
-        //    Conexion.Open();
-        //    LeerFilas = Comando.ExecuteReader();
 
-        //    // Leer todos los idiomas de la base de datos
-        //    List<IdiomasDto> ListaSerializada = new List<IdiomasDto>();
+        public List<IdiomasDto> GetAllIdiomas()
+        {
+            // Crear y configurar el comando SQL
+            Comando.Connection = Conexion;
+            Comando.CommandText = "SELECT * FROM CountryLanguage"; 
+            Comando.CommandType = CommandType.Text;
 
-        //    while (LeerFilas.Read())
-        //    {
-        //        ListaSerializada.Add(new IdiomasDto
-        //        {
-        //            CountryCode = LeerFilas.GetString(0),
-        //            Languaje = LeerFilas.GetString(1),
-        //            IsOfficial = LeerFilas.GetString(2),
-        //            Percentage = LeerFilas.GetDecimal(3),
-        //        });
-        //    }
+            Conexion.Open();
+            LeerFilas = Comando.ExecuteReader();
 
-        //    LeerFilas.Close();
-        //    Conexion.Close();
+            List<IdiomasDto> ListaSerializada = new List<IdiomasDto>();
 
-        //    // Agrupar por CountryCode y Language utilizando LINQ
-        //    var idiomasAgrupados = ListaSerializada
-        //        .GroupBy(idioma => new { idioma.CountryCode, idioma.Languaje })
-        //        .Select(grupo => new IdiomasDto
-        //        {
-        //            CountryCode = grupo.Key.CountryCode,
-        //            Languaje = grupo.Key.Languaje,
-        //            // suma de porcentajes aquí si es necesario
-        //            Percentage = grupo.Sum(idioma => idioma.Percentage),
-        //            // Agregar otras propiedades según sea necesario
-        //        })
-        //        .ToList();
+            // Leer los registros de la tabla
+            while (LeerFilas.Read())
+            {
+                ListaSerializada.Add(new IdiomasDto
+                {
+                    CountryCode = LeerFilas.GetString(0),
+                    Languaje = LeerFilas.GetString(1),
+                    IsOfficial = LeerFilas.GetString(2),
+                    Percentage = LeerFilas.GetDecimal(3),
+                });
+            }
 
-        //    return idiomasAgrupados;
-        //}
+            LeerFilas.Close();
+            Conexion.Close();
+
+            return ListaSerializada;
+        }
+
+
+
+
+
+
+        public List<IdiomasDto> VerIdiomasPorCodigoPais(string countryCode)
+        {
+            Comando.Connection = Conexion;
+            Comando.CommandText = "VerIdiomasPorCountryCode"; // Nombre del procedimiento almacenado
+            Comando.CommandType = CommandType.StoredProcedure;
+
+            Comando.Parameters.Clear();
+            Comando.Parameters.AddWithValue("@Code", countryCode); // Ajusta el nombre del parámetro según tu procedimiento almacenado
+
+            Conexion.Open();
+
+            LeerFilas = Comando.ExecuteReader();
+            List<IdiomasDto> ListaSerializada = new List<IdiomasDto>();
+
+            while (LeerFilas.Read())
+            {
+                ListaSerializada.Add(new IdiomasDto
+                {
+                    CountryCode = LeerFilas.GetString(0),
+                    Languaje = LeerFilas.GetString(1),
+                    IsOfficial = LeerFilas.GetString(2),
+                    Percentage = LeerFilas.GetDecimal(3),
+                });
+            }
+
+            LeerFilas.Close();
+            Conexion.Close();
+
+            return ListaSerializada;
+        }
+
+
 
     }
 

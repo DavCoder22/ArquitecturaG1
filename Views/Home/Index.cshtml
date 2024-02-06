@@ -1,4 +1,6 @@
-﻿ @using ArquitecturaG1.Models.DTO
+﻿
+
+@using ArquitecturaG1.Models.DTO
 @model IdiomasDto
 
 @{
@@ -75,6 +77,9 @@
         });
     }
 
+
+
+
     function seleccionarPais(nombrePais) {
         // Asignar el valor seleccionado a la variable
         paisSeleccionado = nombrePais;
@@ -85,36 +90,42 @@
         alert("País seleccionado: " + paisSeleccionado);
     }
 
+
+
 </script>
 
-@*                                                                                       IDIOMAS                                *@
 
 
-@* intento de arreglo del no se encontraron result antes de empezar *@
-@if (listaIdiomas != null)
-    @if (listaIdiomas.Any())
+    @if (listaIdiomas != null)
     {
-        <h3>Resultados de la búsqueda:</h3>
-        <ul>
-            @foreach (var idioma in listaIdiomas)
-            {
-                <li>@idioma.CountryCode</li>
-                <li>Languaje: @idioma.Languaje</li>
-                <li>IsOfficial: @idioma.IsOfficial</li>
-                <li>Percentage: @idioma.Percentage</li>
-                <hr />
-            }
-        </ul>
+        @if (listaIdiomas.Any())
+        {
+            <table class="table mt-4 custom-table">
+                <thead>
+                    <tr>
+                        <th>Codigo</th>
+                        <th>Lenguajes</th>
+                        <th>Porcentaje</th>
+                        <th>Es Oficial?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var idioma in listaIdiomas)
+                    {
+                        <tr>
+                            <td>@idioma.CountryCode</td>
+                            <td>@idioma.Languaje</td>
+                            <td>@idioma.Percentage</td>
+                            <td>@idioma.IsOfficial</td>
+                        </tr>
+                    }
+                    }
 
+                </tbody>
+            </table>
+        }
     }
 
-    // para cuando no hay idioma
-    else if (!listaIdiomas.Any())
-    {
-        <div class="alert-box">
-            <img src="~/img/activo.png" class="alert-icon">
-            <h2 class="alert-text"> Verifica tu información ingresada </h2>
-        </div>
 
-    }
+
 

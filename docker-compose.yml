@@ -24,7 +24,7 @@ services:
       - "6667:1433"
 
   arquitecturag1:
-    image: leandroexp/imgarquitectura
+    image: leandroexp/imgarquitectura:v1.0
     container_name: arquitecturag1_container
     ports:
       - "8080:8080"

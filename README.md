@@ -9,11 +9,11 @@ Para ejecutar este proyecto, asegúrate de tener Docker instalado en tu sistema.
 1. Clona este repositorio en tu máquina local:
 
    ```bash
-   git clone https://github.com/tu_usuario/arquitectura-g1.git
+   git clone https://github.com/DavCoder22/ArquitecturaG1.git
 
 2. Cambia al directorio del proyecto:   
     ```bash
-    cd arquitectura-g1
+    cd arquitectura-g1  
 
 3. Ejecuta el siguiente comando para iniciar los servicios:
     ```bash

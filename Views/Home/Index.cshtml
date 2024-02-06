@@ -1,13 +1,14 @@
-﻿@using ArquitecturaG1.Models.DTO
-@model PaisesDto
+﻿@* @using ArquitecturaG1.Models.DTO
+@model IdiomasDto
 
 @{
     ViewData["Title"] = "Index";
     var listaPaises = ViewData["ListaPaises"] as List<PaisesDto>;
+    var listaIdiomas = ViewData["ListaIdiomas"] as List<IdiomasDto>;
 }
-
-    @* intento de arreglo del no se encontraron result antes de empezar *@
-    @if (listaPaises != null)
+ *@
+@* @*     @* intento de arreglo del no se encontraron result antes de empezar *@
+@*     @if (listaPaises != null)
         @if (listaPaises.Any())
         {
             <h3>Resultados de la búsqueda:</h3>
@@ -19,21 +20,18 @@
             </ul>
     
         }
+        else if (!listaPaises.Any())
+        {
+            <div class="alert-box">
+                <img src="~/img/activo.png" class="alert-icon">
+                <h2 class="alert-text"> Verifica el pais ingresado </h2>
+            </div>
 
-    // para cuando no hay nada de citas
-    else if (!listaPaises.Any())
-    {
-        <div class="alert-box">
-            <img src="~/img/activo.png" class="alert-icon">
-            <h2 class="alert-text"> Verifica el pais ingresado </h2>
-        </div>
-
-    }
+        } *@
 
 
-          @*   intento de deshabilitar boton *@
 
-<h2>Estadisticas de Lenguajes de un País</h2>
+@* <h2>Estadisticas de Lenguajes de un País</h2>
 
 <div id="busquedaForm">
     <form id="formBuscarPaises">
@@ -41,6 +39,81 @@
         <input type="text" id="nombrePais" name="NombrePais" />
         <button type="button" onclick="buscarPaises()" id="btnBuscar">Buscar</button>
     </form>
+</div>
+ *@
+
+
+
+@* <script>
+    function buscarPaises() {
+        // Deshabilitar el botón después de hacer clic
+        $("#btnBuscar").prop("disabled", true);
+
+        var nombrePais = document.getElementById("nombrePais").value;
+
+        // Realizar la solicitud AJAX al servidor para buscar países
+        $.ajax({
+            url: "/Home/BuscarPaises",
+            type: "POST",
+            data: { nombrePais: nombrePais },
+            dataType: "html",
+            success: function (result) {
+                // Actualizar el contenido del div de resultados con los nuevos resultados
+                $("#resultadoBusqueda").html(result);
+            },
+            error: function (error) {
+                console.error("Error al realizar la búsqueda: ", error);
+            }
+        });
+    }
+</script> *@
+
+@*                                                                                       pruebaa                                *@
+
+@using ArquitecturaG1.Models.DTO
+@model IdiomasDto
+
+@{
+    ViewData["Title"] = "Index";
+    var listaPaises = ViewData["ListaPaises"] as List<PaisesDto>;
+    var listaIdiomas = ViewData["ListaIdiomas"] as List<IdiomasDto>;
+}
+
+<!-- Intento de arreglo del "no se encontraron resultados antes de empezar" -->
+@if (listaPaises != null)
+{
+    @if (listaPaises.Any())
+    {
+        <h3>Resultados de la búsqueda:</h3>
+        <ul>
+            @foreach (var pais in listaPaises)
+            {
+                <li>@pais.Name <button type="button" onclick="seleccionarPais('@pais.Name')">Seleccionar</button></li>
+            }
+        </ul>
+    }
+    else
+    {
+        <div class="alert-box">
+            <img src="~/img/activo.png" class="alert-icon">
+            <h2 class="alert-text"> Verifica el país ingresado </h2>
+        </div>
+    }
+}
+
+<h2>Estadísticas de Lenguajes de un País</h2>
+
+<div id="busquedaForm">
+    <form id="formBuscarPaises">
+        <label for="nombrePais">Nombre del País:</label>
+        <input type="text" id="nombrePais" name="NombrePais" />
+        <button type="button" onclick="buscarPaises()" id="btnBuscar">Buscar</button>
+    </form>
+</div>
+
+<!-- Nuevo div para mostrar las estadísticas del idioma del país seleccionado -->
+<div id="estadisticasIdioma">
+    <!-- Aquí se mostrarán las estadísticas de idiomas para el país seleccionado -->
 </div>
 
 <script>
@@ -63,10 +136,69 @@
             error: function (error) {
                 console.error("Error al realizar la búsqueda: ", error);
             }
+        });
+    }
 
+    function seleccionarPais(nombrePais) {
+        // Habilitar el botón de búsqueda después de seleccionar un país
+        $("#btnBuscar").prop("disabled", false);
+
+        // Mostrar estadísticas de idiomas para el país seleccionado
+        $.ajax({
+            url: "/Home/ObtenerEstadisticasIdiomas",
+            type: "POST",
+            data: { nombrePais: nombrePais },
+            dataType: "html",
+            success: function (result) {
+                // Actualizar el contenido del div de estadísticas con los nuevos resultados
+                $("#estadisticasIdioma").html(result);
+            },
+            error: function (error) {
+                console.error("Error al obtener estadísticas de idiomas: ", error);
+            }
         });
     }
 </script>
 
 
+
+
+
+
+
+
+
+
+
+
+@*                                                                                       IDIOMAS                                *@
+
+
+@* intento de arreglo del no se encontraron result antes de empezar *@
+@if (listaIdiomas != null)
+    @if (listaIdiomas.Any())
+    {
+        <h3>Resultados de la búsqueda:</h3>
+        <ul>
+            @foreach (var idioma in listaIdiomas)
+            {
+                <li>@idioma.CountryCode</li>
+                <li>Languaje: @idioma.Languaje</li>
+                <li>IsOfficial: @idioma.IsOfficial</li>
+                <li>Percentage: @idioma.Percentage</li>
+                <hr />
+            }
+        </ul>
+
+    }
+
+    // para cuando no hay idioma
+    else if (!listaIdiomas.Any())
+    {
+        <div class="alert-box">
+            <img src="~/img/activo.png" class="alert-icon">
+            <h2 class="alert-text"> Verifica tu información ingresada </h2>
+        </div>
+
+    }
 

@@ -1,0 +1,30 @@
+﻿version: '3.8'
+
+services:
+  mssql_paises:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    container_name: mssql_paises_container
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=LeandroExp1999.
+    volumes:
+      - ./dbpaises:/var/opt/mssql/data
+    ports:
+      - "6666:1433"
+
+  mssql_idiomas:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    container_name: mssql_idiomas_container
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=LeandroExp1999.
+    volumes:
+      - ./dbidiomas:/var/opt/mssql/data
+    ports:
+      - "6667:1433"
+
+  arquitecturag1:
+    image: leandroexp/imgarquitectura
+    container_name: arquitecturag1_container
+    ports:
+      - "8080:8080"

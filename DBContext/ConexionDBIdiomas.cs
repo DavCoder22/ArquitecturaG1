@@ -11,7 +11,7 @@ namespace ArquitecturaG1.DBContext
     class ConexionDBIdiomas
     {
         //Cadena de conexión hacia base de datos IdiomasDB
-        static readonly string conexion = "Data Source=Sal;Initial Catalog=IdiomasDB;User ID=sa;Password=Abue2679522;";
+        static readonly string conexion = "Data Source=mssql_idiomas_container;Initial Catalog=IdiomasDB;User ID=sa;Password=LeandroExp99.";
         protected SqlConnection Conexion = new SqlConnection(conexion);
 
     }

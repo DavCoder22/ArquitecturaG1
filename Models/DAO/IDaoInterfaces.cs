@@ -13,7 +13,6 @@ namespace ArquitecturaG1.Models.DAO
     public interface IIdiomasDao
     {
         List<IdiomasDto> VerIdiomas(string condicion);
-        //List<IdiomasDto> VerIdiomasAgrupados();
     }
 
     public interface IPaisesDto

@@ -1,4 +1,4 @@
-﻿@* @using ArquitecturaG1.Models.DTO
+﻿ @using ArquitecturaG1.Models.DTO
 @model IdiomasDto
 
 @{
@@ -6,78 +6,8 @@
     var listaPaises = ViewData["ListaPaises"] as List<PaisesDto>;
     var listaIdiomas = ViewData["ListaIdiomas"] as List<IdiomasDto>;
 }
- *@
-@* @*     @* intento de arreglo del no se encontraron result antes de empezar *@
-@*     @if (listaPaises != null)
-        @if (listaPaises.Any())
-        {
-            <h3>Resultados de la búsqueda:</h3>
-            <ul>
-                @foreach (var pais in listaPaises)
-                {
-                    <li>@pais.Name</li>
-                }
-            </ul>
-    
-        }
-        else if (!listaPaises.Any())
-        {
-            <div class="alert-box">
-                <img src="~/img/activo.png" class="alert-icon">
-                <h2 class="alert-text"> Verifica el pais ingresado </h2>
-            </div>
 
-        } *@
-
-
-
-@* <h2>Estadisticas de Lenguajes de un País</h2>
-
-<div id="busquedaForm">
-    <form id="formBuscarPaises">
-        <label for="nombrePais">Nombre del País:</label>
-        <input type="text" id="nombrePais" name="NombrePais" />
-        <button type="button" onclick="buscarPaises()" id="btnBuscar">Buscar</button>
-    </form>
-</div>
- *@
-
-
-
-@* <script>
-    function buscarPaises() {
-        // Deshabilitar el botón después de hacer clic
-        $("#btnBuscar").prop("disabled", true);
-
-        var nombrePais = document.getElementById("nombrePais").value;
-
-        // Realizar la solicitud AJAX al servidor para buscar países
-        $.ajax({
-            url: "/Home/BuscarPaises",
-            type: "POST",
-            data: { nombrePais: nombrePais },
-            dataType: "html",
-            success: function (result) {
-                // Actualizar el contenido del div de resultados con los nuevos resultados
-                $("#resultadoBusqueda").html(result);
-            },
-            error: function (error) {
-                console.error("Error al realizar la búsqueda: ", error);
-            }
-        });
-    }
-</script> *@
-
-@*                                                                                       pruebaa                                *@
-
-@using ArquitecturaG1.Models.DTO
-@model IdiomasDto
-
-@{
-    ViewData["Title"] = "Index";
-    var listaPaises = ViewData["ListaPaises"] as List<PaisesDto>;
-    var listaIdiomas = ViewData["ListaIdiomas"] as List<IdiomasDto>;
-}
+<h2>Estadísticas de Lenguajes de un País</h2>
 
 <!-- Intento de arreglo del "no se encontraron resultados antes de empezar" -->
 @if (listaPaises != null)
@@ -101,7 +31,10 @@
     }
 }
 
-<h2>Estadísticas de Lenguajes de un País</h2>
+
+<div id="resultadoBusqueda">
+    <!-- Aquí se mostrarán las estadísticas de idiomas para el país seleccionado -->
+</div>
 
 <div id="busquedaForm">
     <form id="formBuscarPaises">
@@ -111,12 +44,11 @@
     </form>
 </div>
 
-<!-- Nuevo div para mostrar las estadísticas del idioma del país seleccionado -->
-<div id="estadisticasIdioma">
-    <!-- Aquí se mostrarán las estadísticas de idiomas para el país seleccionado -->
-</div>
 
 <script>
+     var paisSeleccionado = ""; // Variable global para almacenar el país seleccionado
+
+
     function buscarPaises() {
         // Deshabilitar el botón después de hacer clic
         $("#btnBuscar").prop("disabled", true);
@@ -135,41 +67,25 @@
             },
             error: function (error) {
                 console.error("Error al realizar la búsqueda: ", error);
+            },
+            complete: function () {
+                // Habilitar el botón nuevamente después de completar la solicitud (ya sea éxito o error)
+                $("#btnBuscar").prop("disabled", false);
             }
         });
     }
 
     function seleccionarPais(nombrePais) {
-        // Habilitar el botón de búsqueda después de seleccionar un país
-        $("#btnBuscar").prop("disabled", false);
+        // Asignar el valor seleccionado a la variable
+        paisSeleccionado = nombrePais;
 
-        // Mostrar estadísticas de idiomas para el país seleccionado
-        $.ajax({
-            url: "/Home/ObtenerEstadisticasIdiomas",
-            type: "POST",
-            data: { nombrePais: nombrePais },
-            dataType: "html",
-            success: function (result) {
-                // Actualizar el contenido del div de estadísticas con los nuevos resultados
-                $("#estadisticasIdioma").html(result);
-            },
-            error: function (error) {
-                console.error("Error al obtener estadísticas de idiomas: ", error);
-            }
-        });
+        // Puedes realizar acciones adicionales aquí si es necesario
+
+        // Ejemplo: Mostrar una alerta con el país seleccionado
+        alert("País seleccionado: " + paisSeleccionado);
     }
+
 </script>
-
-
-
-
-
-
-
-
-
-
-
 
 @*                                                                                       IDIOMAS                                *@
 

@@ -11,6 +11,9 @@ namespace ArquitecturaG1.Controllers
     public class HomeController : Controller
     {
         private readonly IDatabaseFactory _databaseFactory;
+        PaisesDao paisesDao = null;
+        IdiomasDao idiomasDao = null;
+
 
         public HomeController(IDatabaseFactory databaseFactory)
         {
@@ -33,7 +36,7 @@ namespace ArquitecturaG1.Controllers
         public IActionResult BuscarPaises(string nombrePais)
         {
             var listaPaises = new List<PaisesDto>();
-            PaisesDao paisesDao = null;
+            //PaisesDao paisesDao = null;
 
             try
             {
@@ -67,7 +70,7 @@ namespace ArquitecturaG1.Controllers
             try
             {
                 var listaIdiomas = new List<IdiomasDto>();
-                IdiomasDao idiomasDao = null;
+                //IdiomasDao idiomasDao = null;
 
                 idiomasDao = (IdiomasDao)_databaseFactory.CreateIdiomasDao();
                 listaIdiomas = idiomasDao.GetAllIdiomas();
@@ -94,7 +97,7 @@ namespace ArquitecturaG1.Controllers
             try
             {
                 var listaIdiomas = new List<IdiomasDto>();
-                IdiomasDao idiomasDao = null;
+                //IdiomasDao idiomasDao = null;
 
                 try
                 {
@@ -128,6 +131,19 @@ namespace ArquitecturaG1.Controllers
             }
         }
 
+
+
+        public List<PaisesDto> BuscarPaisesPorNombreParcial(string partialName)
+        {
+
+            // Método para buscar países por nombre parcial, facilitando la búsqueda en cascada.
+            var paises = paisesDao.BuscarPaisesPorNombreParcial(partialName);
+            return paises;
+        }
+
+
+
+        //public IActionResult SearchPaises
 
 
 

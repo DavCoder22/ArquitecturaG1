@@ -1,130 +1,46 @@
-﻿
-
-@using ArquitecturaG1.Models.DTO
-@model IdiomasDto
-
-@{
-    ViewData["Title"] = "Index";
-    var listaPaises = ViewData["ListaPaises"] as List<PaisesDto>;
-    var listaIdiomas = ViewData["ListaIdiomas"] as List<IdiomasDto>;
+﻿@{
+    ViewData["Title"] = "Buscar País";
 }
 
-<h2>Estadísticas de Lenguajes de un País</h2>
+<h1>@ViewData["Title"]]</h1>
 
-<!-- Intento de arreglo del "no se encontraron resultados antes de empezar" -->
-@if (listaPaises != null)
-{
-    @if (listaPaises.Any())
-    {
-        <h3>Resultados de la búsqueda:</h3>
-        <ul>
-            @foreach (var pais in listaPaises)
-            {
-                <li>@pais.Name <button type="button" onclick="seleccionarPais('@pais.Name')">Seleccionar</button></li>
-            }
-        </ul>
-    }
-    else
-    {
-        <div class="alert-box">
-            <img src="~/img/activo.png" class="alert-icon">
-            <h2 class="alert-text"> Verifica el país ingresado </h2>
-        </div>
-    }
-}
+<form asp-controller="Home" asp-action="BuscarPaises" method="post">
+    <input type="text" id="nombrePais" name="nombrePais" placeholder="Buscar país..." autocomplete="off">
+    <button type="submit">Buscar</button>
+</form>
 
+<datalist id="countryList"></datalist>
 
-<div id="resultadoBusqueda">
-    <!-- Aquí se mostrarán las estadísticas de idiomas para el país seleccionado -->
-</div>
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        $(function() {
+            var countries = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.whitespace,
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '/Home/BuscarPaises?nombrePais=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+            
+            $('#nombrePais').typeahead({
+                hint: true,
+                highlight: true,
+                minLength: 1
+            }, {
+                name: 'countries',
+                source: countries
+            });
 
-<div id="busquedaForm">
-    <form id="formBuscarPaises">
-        <label for="nombrePais">Nombre del País:</label>
-        <input type="text" id="nombrePais" name="NombrePais" />
-        <button type="button" onclick="buscarPaises()" id="btnBuscar">Buscar</button>
-    </form>
-</div>
-
-
-<script>
-     var paisSeleccionado = ""; // Variable global para almacenar el país seleccionado
-
-
-    function buscarPaises() {
-        // Deshabilitar el botón después de hacer clic
-        $("#btnBuscar").prop("disabled", true);
-
-        var nombrePais = document.getElementById("nombrePais").value;
-
-        // Realizar la solicitud AJAX al servidor para buscar países
-        $.ajax({
-            url: "/Home/BuscarPaises",
-            type: "POST",
-            data: { nombrePais: nombrePais },
-            dataType: "html",
-            success: function (result) {
-                // Actualizar el contenido del div de resultados con los nuevos resultados
-                $("#resultadoBusqueda").html(result);
-            },
-            error: function (error) {
-                console.error("Error al realizar la búsqueda: ", error);
-            },
-            complete: function () {
-                // Habilitar el botón nuevamente después de completar la solicitud (ya sea éxito o error)
-                $("#btnBuscar").prop("disabled", false);
-            }
+            $('#nombrePais').bind('typeahead:select', function(ev, suggestion) {
+                console.log('Selection: ' + suggestion);
+            });
         });
-    }
+    </script>
+    <script src="~/lib/typeahead.js/dist/typeahead.bundle.min.js"></script>
+}
 
-
-
-
-    function seleccionarPais(nombrePais) {
-        // Asignar el valor seleccionado a la variable
-        paisSeleccionado = nombrePais;
-
-        // Puedes realizar acciones adicionales aquí si es necesario
-
-        // Ejemplo: Mostrar una alerta con el país seleccionado
-        alert("País seleccionado: " + paisSeleccionado);
-    }
-
-
-
-</script>
-
-
-
-    @if (listaIdiomas != null)
-    {
-        @if (listaIdiomas.Any())
-        {
-            <table class="table mt-4 custom-table">
-                <thead>
-                    <tr>
-                        <th>Codigo</th>
-                        <th>Lenguajes</th>
-                        <th>Porcentaje</th>
-                        <th>Es Oficial?</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var idioma in listaIdiomas)
-                    {
-                        <tr>
-                            <td>@idioma.CountryCode</td>
-                            <td>@idioma.Languaje</td>
-                            <td>@idioma.Percentage</td>
-                            <td>@idioma.IsOfficial</td>
-                        </tr>
-                    }
-                    }
-
-                </tbody>
-            </table>
-        }
-    }
 
 
 

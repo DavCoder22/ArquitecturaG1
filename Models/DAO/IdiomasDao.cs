@@ -40,9 +40,6 @@ namespace ArquitecturaG1.Models.DAO
             return ListaSerializada;
         }
 
-
-
-
         public List<IdiomasDto> GetAllIdiomas()
         {
             // Crear y configurar el comando SQL

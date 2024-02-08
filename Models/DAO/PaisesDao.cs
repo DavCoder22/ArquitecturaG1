@@ -50,6 +50,50 @@ namespace ArquitecturaG1.Models.DAO
             return ListGeneric;
         }
 
+
+        public List<PaisesDto> BuscarPaisesPorNombreParcial(string partialName)
+        {
+            var listaPaises = new List<PaisesDto>();
+
+            // Utilizar using para asegurar la limpieza de recursos.
+
+            // NO OLVIDAR CAMBIAR EL PROC ALMA X CODE
+
+            using (var comando = new SqlCommand("VerPaises", Conexion))
+            {
+                comando.CommandType = CommandType.StoredProcedure;
+                comando.Parameters.Clear();
+                comando.Parameters.AddWithValue("@Condition", $"%{partialName}%");
+
+                Conexion.Open();
+
+                using (var leerFilas = comando.ExecuteReader())
+                {
+                    while (leerFilas.Read())
+                    {
+                        listaPaises.Add(new PaisesDto
+                        {
+                            // Asegúrate de ajustar los índices de GetString y GetInt32 según el diseño de tu tabla.
+                            Name = leerFilas.GetString(1),
+                            Continent = leerFilas.GetString(2),
+                            Region = leerFilas.GetString(3),
+                            Population = leerFilas.GetInt32(6),
+                            Localname = leerFilas.GetString(10),
+                            Capital = leerFilas.IsDBNull(13) ? 0 : leerFilas.GetInt32(13)
+
+                        });
+                    }
+                }
+
+                Conexion.Close();
+            }
+
+            return listaPaises;
+        }
+
+
+
+
     }
 
 

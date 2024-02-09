@@ -36,6 +36,7 @@ namespace ArquitecturaG1.Models.DAO
             {
                 ListGeneric.Add(new PaisesDto
                 {
+                    Code = LeerFilas.GetString(0),
                     Name = LeerFilas.GetString(1),
                     Continent = LeerFilas.GetString(2),
                     Region = LeerFilas.GetString(3),
@@ -64,6 +65,7 @@ namespace ArquitecturaG1.Models.DAO
                     {
                         var pais = new PaisesDto
                         {
+                            Code = reader["Code"]as string,
                             Name = reader["Name"] as string,
                             Continent = reader["Continent"] as string,
                             Region = reader["Region"] as string,

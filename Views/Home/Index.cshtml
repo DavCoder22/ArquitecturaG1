@@ -1,42 +1,41 @@
-﻿@{
-    ViewData["Title"] = "Buscar País";
-    var listaPaises = ViewData["ListaPaises"] as List<ArquitecturaG1.Models.DTO.PaisesDto>;
+﻿@using ArquitecturaG1.Models.DTO
+@{
+    Layout = null;
 }
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/css/style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Idiomas por País</title>
+    <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet">
+    <link href="~/css/site.css" rel="stylesheet" />
 </head>
 <body>
 
-    <h1>@ViewData["Title"]</h1>
-
-    <div class="content search">
-        <form asp-action="BuscarPaises" method="post">
-            <input type="text" name="nombrePais" placeholder="Buscar país..." autocomplete="off">
-            <ul class="autocomplete" id="countryList"></ul>
-            <button type="submit">Buscar</button>
-        </form>
+    <div class="search-container">
+        <input type="text" id="nombrePais" placeholder="Buscar país..." autocomplete="off">
+        <button id="buscarPaisesBtn">Buscar</button>
     </div>
 
-    @if (listaPaises != null && !listaPaises.Any())
-    {
-        <p>No se encontraron resultados.</p>
-    }
+    <div class="table-container">
+        <table id="tablaIdiomas">
+            <thead>
+                <tr>
+                    <th>Idioma</th>
+                    <th>Oficial</th>
+                    <th>Porcentaje</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Los datos de los idiomas se llenarán aquí -->
+            </tbody>
+        </table>
+    </div>
 
-    @section Scripts {
-      @*   autocompletar pendiente *@
-        <script src="~/js/autocomplete.js"></script>
-
-        <script src="~/js/script.js"></script> <!-- Agrega esta línea para enlazar script.js -->
-    }
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="~/js/functions.js"></script>
 </body>
 </html>
-
-
-
-

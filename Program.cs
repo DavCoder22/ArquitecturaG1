@@ -15,7 +15,11 @@ builder.Services.AddSession(options =>
     options.IdleTimeout = TimeSpan.FromMinutes(30);
     options.Cookie.IsEssential = true;
 });
-
+// Configure antiforgery service with custom options if needed
+builder.Services.AddAntiforgery(options => {
+    options.HeaderName = "X-CSRF-TOKEN"; // Configura el nombre de la cabecera para el token antiforgery
+    // Puedes configurar más opciones aquí si lo necesitas
+});
 
 
 var app = builder.Build();

@@ -13,34 +13,36 @@ namespace ArquitecturaG1.Models.DAO
     internal class PaisesDao : ConexionDBPaises, IPaisesDao
     {
         //Se declara el SqlReader para leer las filas
-        static SqlDataReader LeerFilas;
-        static SqlCommand Comando = new SqlCommand();
+        private SqlDataReader LeerFilas;
+        private SqlCommand Comando = new SqlCommand();
 
         //Se crea una lista donde se almacenen los datos
         public List<PaisesDto> VerPaises(string name)
         {
             Comando.Connection = Conexion;
-            Comando.CommandText = "VerPaises";
-            Comando.CommandType = CommandType.StoredProcedure;
+            // Modifica la consulta para no usar procedimientos almacenados
+            Comando.CommandText = "SELECT * FROM Country WHERE Name = @Name";
+            Comando.Parameters.Clear();
             if (name != null)
-                Comando.Parameters.AddWithValue("@Condition", name);
+                Comando.Parameters.AddWithValue("@Name", name);
+            Comando.CommandType = CommandType.Text;
 
             Conexion.Open();
 
             LeerFilas = Comando.ExecuteReader();
-            List<PaisesDto> ListGeneric = new List<PaisesDto>();
+            var ListGeneric = new List<PaisesDto>();
 
             while (LeerFilas.Read())
             {
                 ListGeneric.Add(new PaisesDto
                 {
+                    Code = LeerFilas.GetString(0),
                     Name = LeerFilas.GetString(1),
                     Continent = LeerFilas.GetString(2),
                     Region = LeerFilas.GetString(3),
                     Population = LeerFilas.GetInt32(6),
                     Localname = LeerFilas.GetString(10),
                     Capital = LeerFilas.GetInt32(13)
-
                 });
             }
 
@@ -50,51 +52,33 @@ namespace ArquitecturaG1.Models.DAO
             return ListGeneric;
         }
 
-
         public List<PaisesDto> BuscarPaisesPorNombreParcial(string partialName)
         {
-            var listaPaises = new List<PaisesDto>();
-
-            // Utilizar using para asegurar la limpieza de recursos.
-
-            // NO OLVIDAR CAMBIAR EL PROC ALMA X CODE
-
-            using (var comando = new SqlCommand("VerPaises", Conexion))
+            List<PaisesDto> listaPaises = new List<PaisesDto>();
+            using (var comando = new SqlCommand("SELECT * FROM Country WHERE Name LIKE @PartialName", Conexion))
             {
-                comando.CommandType = CommandType.StoredProcedure;
-                comando.Parameters.Clear();
-                comando.Parameters.AddWithValue("@Condition", $"%{partialName}%");
-
+                comando.Parameters.Add(new SqlParameter("@PartialName", SqlDbType.VarChar) { Value = $"%{partialName}%" });
                 Conexion.Open();
-
-                using (var leerFilas = comando.ExecuteReader())
+                using (var reader = comando.ExecuteReader())
                 {
-                    while (leerFilas.Read())
+                    while (reader.Read())
                     {
-                        listaPaises.Add(new PaisesDto
+                        var pais = new PaisesDto
                         {
-                            // Asegúrate de ajustar los índices de GetString y GetInt32 según el diseño de tu tabla.
-                            Name = leerFilas.GetString(1),
-                            Continent = leerFilas.GetString(2),
-                            Region = leerFilas.GetString(3),
-                            Population = leerFilas.GetInt32(6),
-                            Localname = leerFilas.GetString(10),
-                            Capital = leerFilas.IsDBNull(13) ? 0 : leerFilas.GetInt32(13)
-
-                        });
+                            Code = reader["Code"]as string,
+                            Name = reader["Name"] as string,
+                            Continent = reader["Continent"] as string,
+                            Region = reader["Region"] as string,
+                            Population = reader["Population"] as int? ?? default(int),
+                            Localname = reader["LocalName"] as string,
+                            Capital = reader["Capital"] as int? ?? default(int)
+                        };
+                        listaPaises.Add(pais);
                     }
                 }
-
                 Conexion.Close();
             }
-
             return listaPaises;
         }
-
-
-
-
     }
-
-
 }

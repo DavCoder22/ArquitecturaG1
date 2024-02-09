@@ -8,11 +8,13 @@ namespace ArquitecturaG1.Models.DAO
     public interface IPaisesDao
     {
         List<PaisesDto> VerPaises(string name);
+        List<PaisesDto> BuscarPaisesPorNombreParcial(string partialName);
     }
 
     public interface IIdiomasDao
     {
         List<IdiomasDto> VerIdiomas(string condicion);
+        List<IdiomasDto> VerIdiomasPorCodigoPais(string countryCode);
     }
 
     public interface IPaisesDto

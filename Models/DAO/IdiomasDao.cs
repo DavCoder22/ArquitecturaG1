@@ -1,30 +1,32 @@
 ﻿using ArquitecturaG1.DBContext;
 using ArquitecturaG1.Models.DTO;
-//using ArquitecturaG1.Models.IDaoInterfaces;
 using System.Data;
 using System.Data.SqlClient;
+using System.Collections.Generic;
 
 namespace ArquitecturaG1.Models.DAO
 {
-    internal class IdiomasDao : ConexionDBIdiomas , IIdiomasDao
+    internal class IdiomasDao : ConexionDBIdiomas, IIdiomasDao
     {
         //Se declara un SqlReader para leer las filas
-        SqlDataReader LeerFilas;
-        SqlCommand Comando = new SqlCommand();
+        private SqlDataReader LeerFilas;
+        private SqlCommand Comando = new SqlCommand();
 
         //Se enlista los datos de IdiomaDB
         public List<IdiomasDto> VerIdiomas(string condicion)
         {
-            //Se crean los atributos de conexión
+            //Se crean los atributos de conexión y se configura la consulta SQL directa
             Comando.Connection = Conexion;
-            Comando.CommandText = "VerIdiomas";
-            Comando.CommandType = CommandType.StoredProcedure;
+            Comando.CommandText = "SELECT * FROM CountryLanguage WHERE Language = @Language";
+            Comando.Parameters.Clear();
             Comando.Parameters.AddWithValue("@Language", condicion);
+            Comando.CommandType = CommandType.Text;
+
             Conexion.Open();
             LeerFilas = Comando.ExecuteReader();
-            List<IdiomasDto> ListaSerializada = new List<IdiomasDto>();
+            var ListaSerializada = new List<IdiomasDto>();
 
-            //Leer los parametros de cada fila
+            // Leer los parámetros de cada fila
             while (LeerFilas.Read())
             {
                 ListaSerializada.Add(new IdiomasDto
@@ -35,6 +37,7 @@ namespace ArquitecturaG1.Models.DAO
                     Percentage = LeerFilas.GetDecimal(3),
                 });
             }
+
             LeerFilas.Close();
             Conexion.Close();
             return ListaSerializada;
@@ -42,15 +45,14 @@ namespace ArquitecturaG1.Models.DAO
 
         public List<IdiomasDto> GetAllIdiomas()
         {
-            // Crear y configurar el comando SQL
+            // Configurar el comando SQL para seleccionar todos los idiomas
             Comando.Connection = Conexion;
-            Comando.CommandText = "SELECT * FROM CountryLanguage"; 
+            Comando.CommandText = "SELECT * FROM CountryLanguage";
             Comando.CommandType = CommandType.Text;
 
             Conexion.Open();
             LeerFilas = Comando.ExecuteReader();
-
-            List<IdiomasDto> ListaSerializada = new List<IdiomasDto>();
+            var ListaSerializada = new List<IdiomasDto>();
 
             // Leer los registros de la tabla
             while (LeerFilas.Read())
@@ -70,44 +72,31 @@ namespace ArquitecturaG1.Models.DAO
             return ListaSerializada;
         }
 
-
-
-
-
-
         public List<IdiomasDto> VerIdiomasPorCodigoPais(string countryCode)
         {
-            Comando.Connection = Conexion;
-            Comando.CommandText = "VerIdiomasPorCountryCode"; // Nombre del procedimiento almacenado
-            Comando.CommandType = CommandType.StoredProcedure;
-
-            Comando.Parameters.Clear();
-            Comando.Parameters.AddWithValue("@Code", countryCode); // Ajusta el nombre del parámetro según tu procedimiento almacenado
-
-            Conexion.Open();
-
-            LeerFilas = Comando.ExecuteReader();
-            List<IdiomasDto> ListaSerializada = new List<IdiomasDto>();
-
-            while (LeerFilas.Read())
+            var ListaSerializada = new List<IdiomasDto>();
+            using (var comando = new SqlCommand("SELECT * FROM CountryLanguage WHERE CountryCode = @CountryCode", Conexion))
             {
-                ListaSerializada.Add(new IdiomasDto
+                comando.Parameters.Add(new SqlParameter("@CountryCode", SqlDbType.Char) { Value = countryCode });
+                Conexion.Open();
+                using (var LeerFilas = comando.ExecuteReader())
                 {
-                    CountryCode = LeerFilas.GetString(0),
-                    Languaje = LeerFilas.GetString(1),
-                    IsOfficial = LeerFilas.GetString(2),
-                    Percentage = LeerFilas.GetDecimal(3),
-                });
+                    while (LeerFilas.Read())
+                    {
+                        var idioma = new IdiomasDto
+                        {
+                            CountryCode = LeerFilas.IsDBNull(0) ? null : LeerFilas.GetString(0),
+                            Languaje = LeerFilas.IsDBNull(1) ? null : LeerFilas.GetString(1),
+                            IsOfficial = LeerFilas.IsDBNull(2) ? null : LeerFilas.GetString(2),
+                            Percentage = LeerFilas.IsDBNull(3) ? default(decimal) : LeerFilas.GetDecimal(3),
+                        };
+                        ListaSerializada.Add(idioma);
+                    }
+                }
+                Conexion.Close();
             }
-
-            LeerFilas.Close();
-            Conexion.Close();
-
             return ListaSerializada;
         }
 
-
-
     }
-
 }

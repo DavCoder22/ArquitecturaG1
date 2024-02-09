@@ -17,14 +17,16 @@ namespace ArquitecturaG1.Models.DAO
         static SqlCommand Comando = new SqlCommand();
 
         //Se crea una lista donde se almacenen los datos
-        public List<PaisesDto> VerPaises(string name)
+        public List<PaisesDto> VerPaises(string code)
         {
             Comando.Connection = Conexion;
-            Comando.CommandText = "VerPaises";
-            Comando.CommandType = CommandType.StoredProcedure;
-            if (name != null)
-                Comando.Parameters.AddWithValue("@Condition", name);
-
+            string query = "SELECT Name, Population FROM Countries";
+            Comando.CommandText = query;
+            Comando.CommandType = CommandType.Text;
+            if (code != null)
+                query += "WHERE Code Like @Code";
+            
+            Comando.Parameters.AddWithValue("@Code", $"%{code}%");
             Conexion.Open();
 
             LeerFilas = Comando.ExecuteReader();
@@ -34,12 +36,9 @@ namespace ArquitecturaG1.Models.DAO
             {
                 ListGeneric.Add(new PaisesDto
                 {
+                    Code = LeerFilas.GetString(0),
                     Name = LeerFilas.GetString(1),
-                    Continent = LeerFilas.GetString(2),
-                    Region = LeerFilas.GetString(3),
-                    Population = LeerFilas.GetInt32(6),
-                    Localname = LeerFilas.GetString(10),
-                    Capital = LeerFilas.GetInt32(13)
+                    Population = LeerFilas.GetInt32(2),
 
                 });
             }

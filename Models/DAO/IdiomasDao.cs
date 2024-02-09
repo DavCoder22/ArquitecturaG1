@@ -13,14 +13,19 @@ namespace ArquitecturaG1.Models.DAO
         SqlCommand Comando = new SqlCommand();
 
         //Se enlista los datos de IdiomaDB
-        public List<IdiomasDto> VerIdiomas(string condicion)
+        public List<IdiomasDto> VerIdiomas(string code)
         {
             //Se crean los atributos de conexión
             Comando.Connection = Conexion;
-            Comando.CommandText = "VerIdiomas";
-            Comando.CommandType = CommandType.StoredProcedure;
-            Comando.Parameters.AddWithValue("@Language", condicion);
+            string query = "SELECT Language, IsOfficial, Percentage FROM CountryLanguage";
+            Comando.CommandText = query;
+            Comando.CommandType = CommandType.Text;
+            if (code != null)
+                query += "WHERE CountryCode LIKE @Code";
+
+            Comando.Parameters.AddWithValue("@Code", $"%{code}%");
             Conexion.Open();
+
             LeerFilas = Comando.ExecuteReader();
             List<IdiomasDto> ListaSerializada = new List<IdiomasDto>();
 

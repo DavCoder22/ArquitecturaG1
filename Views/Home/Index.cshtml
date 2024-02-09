@@ -1,46 +1,41 @@
 ﻿@{
     ViewData["Title"] = "Buscar País";
+    var listaPaises = ViewData["ListaPaises"] as List<ArquitecturaG1.Models.DTO.PaisesDto>;
 }
 
-<h1>@ViewData["Title"]]</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/style.css" />
+</head>
+<body>
 
-<form asp-controller="Home" asp-action="BuscarPaises" method="post">
-    <input type="text" id="nombrePais" name="nombrePais" placeholder="Buscar país..." autocomplete="off">
-    <button type="submit">Buscar</button>
-</form>
+    <h1>@ViewData["Title"]</h1>
 
-<datalist id="countryList"></datalist>
+    <div class="content search">
+        <form asp-action="BuscarPaises" method="post">
+            <input type="text" name="nombrePais" placeholder="Buscar país..." autocomplete="off">
+            <ul class="autocomplete" id="countryList"></ul>
+            <button type="submit">Buscar</button>
+        </form>
+    </div>
 
-@section Scripts {
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script>
-        $(function() {
-            var countries = new Bloodhound({
-                datumTokenizer: Bloodhound.tokenizers.whitespace,
-                queryTokenizer: Bloodhound.tokenizers.whitespace,
-                remote: {
-                    url: '/Home/BuscarPaises?nombrePais=%QUERY',
-                    wildcard: '%QUERY'
-                }
-            });
-            
-            $('#nombrePais').typeahead({
-                hint: true,
-                highlight: true,
-                minLength: 1
-            }, {
-                name: 'countries',
-                source: countries
-            });
+    @if (listaPaises != null && !listaPaises.Any())
+    {
+        <p>No se encontraron resultados.</p>
+    }
 
-            $('#nombrePais').bind('typeahead:select', function(ev, suggestion) {
-                console.log('Selection: ' + suggestion);
-            });
-        });
-    </script>
-    <script src="~/lib/typeahead.js/dist/typeahead.bundle.min.js"></script>
-}
+    @section Scripts {
+      @*   autocompletar pendiente *@
+        <script src="~/js/autocomplete.js"></script>
 
+        <script src="~/js/script.js"></script> <!-- Agrega esta línea para enlazar script.js -->
+    }
+
+</body>
+</html>
 
 
 

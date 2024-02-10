@@ -59,7 +59,7 @@ namespace ArquitecturaG1.Models.DAO
             {
                 ListaSerializada.Add(new IdiomasDto
                 {
-                    CountryCode = LeerFilas.GetString(0),
+                   //CountryCode = LeerFilas.GetString(0),
                     Languaje = LeerFilas.GetString(1),
                     IsOfficial = LeerFilas.GetString(2),
                     Percentage = LeerFilas.GetDecimal(3),
@@ -85,7 +85,7 @@ namespace ArquitecturaG1.Models.DAO
                     {
                         var idioma = new IdiomasDto
                         {
-                            CountryCode = LeerFilas.IsDBNull(0) ? null : LeerFilas.GetString(0),
+                           // CountryCode = LeerFilas.IsDBNull(0) ? null : LeerFilas.GetString(0),
                             Languaje = LeerFilas.IsDBNull(1) ? null : LeerFilas.GetString(1),
                             IsOfficial = LeerFilas.IsDBNull(2) ? null : LeerFilas.GetString(2),
                             Percentage = LeerFilas.IsDBNull(3) ? default(decimal) : LeerFilas.GetDecimal(3),

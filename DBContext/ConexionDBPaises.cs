@@ -13,7 +13,7 @@ namespace ArquitecturaG1.DBContext
     {
         //Cadena de conexión a la base de datos PaisesDB
         //System.Configuration.ConfigurationManager.ConnectionStrings["PaisesDB"].ConnectionString;
-        static readonly string conexion = "Data Source=Sal;Initial Catalog=PaisesDB;User ID=sa;Password=Abue2679522;";
+        static readonly string conexion = "Data Source=mssql_paises;Initial Catalog=PaisesDB;User ID=sa;Password=LeandroExp1999.;";
         protected SqlConnection Conexion = new SqlConnection(conexion);
 
     }

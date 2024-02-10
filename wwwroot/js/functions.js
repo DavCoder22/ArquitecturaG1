@@ -8,12 +8,16 @@
         minLength: 2
     });
 
+    // Comentario para indicar un ejemplo de búsqueda
+    $('<p class="comentario-busqueda">Por ejemplo: Australia</p>').insertAfter('.search-container');
+
     $('#buscarPaisesBtn').click(function (e) {
         e.preventDefault();
         var paisNombre = $('#nombrePais').val();
         buscarIdiomasPorPais(paisNombre);
     });
 });
+
 
 function buscarIdiomasPorPais(paisNombre) {
     $.ajax({
@@ -37,7 +41,7 @@ function buscarIdiomasPorPais(paisNombre) {
                         <td>${idioma.percentage}%</td>
                     </tr>`
                 );
-                labels.push(idioma.languaje); // Corregido a 'languaje'
+                labels.push(idioma.languaje); 
                 data.push(idioma.percentage);
             });
             dibujarGrafico(labels, data);
@@ -47,6 +51,8 @@ function buscarIdiomasPorPais(paisNombre) {
         }
     });
 }
+
+
 
 function dibujarGrafico(labels, data) {
     var ctx = document.getElementById('idiomasChart').getContext('2d');
@@ -58,7 +64,7 @@ function dibujarGrafico(labels, data) {
         data: {
             labels: labels,
             datasets: [{
-                label: 'Representación de Idiomas',
+                label: '%',
                 data: data,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
@@ -87,9 +93,21 @@ function dibujarGrafico(labels, data) {
                 },
                 title: {
                     display: true,
-                    text: 'Representación de Idiomas'
-                }
+                    text: 'Representación de idiomas',
+                },
+            
+                // Ajusta el tamaño del gráfico
+                maintainAspectRatio: false,
+                aspectRatio: 1.2
             }
         }
+
+
     });
+
+
+
+
+
+  
 }

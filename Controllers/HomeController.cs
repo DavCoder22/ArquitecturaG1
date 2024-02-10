@@ -25,8 +25,8 @@ namespace ArquitecturaG1.Controllers
             return View();
         }
 
-        // Este método utiliza el Abstract Factory para obtener los idiomas de un país
-        [HttpPost]
+       // Este método utiliza el Abstract Factory para obtener los idiomas de un país
+       //[HttpPost]
         public IActionResult BuscarIdiomasPorPais(string nombrePais)
         {
             var paisesDao = _databaseFactory.CreatePaisesDao();
@@ -41,6 +41,7 @@ namespace ArquitecturaG1.Controllers
 
             return Json(new List<IdiomasDto>()); // Devuelve una lista vacía si no se encuentra el país
         }
+
 
         // Este método podría ser para el autocompletado de nombres de países
         [HttpGet]

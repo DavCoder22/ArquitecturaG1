@@ -7,7 +7,7 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Courier New', Courier, monospace;
     line-height: 1.6;
     color: #333;
     padding: 20px;
@@ -18,13 +18,15 @@ body {
     max-width: 700px;
     margin: 20px auto;
     padding: 20px;
-    background: #fff;
+    background: linear-gradient(to bottom, #123D5A, #370744);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: rgba(255, 255, 255, 0.9); 
 }
+
 
     .search-container input {
         width: 70%;
@@ -38,14 +40,14 @@ body {
         padding: 10px 20px;
         border: none;
         border-radius: 4px;
-        background: #5cb85c;
+        background: #1B7973;
         color: white;
         cursor: pointer;
         font-size: 16px;
     }
 
         .search-container button:hover {
-            background: #4cae4c;
+            background: #3D0A33;
         }
 
 .table-container {
@@ -107,4 +109,74 @@ table {
     width: 80vw;
     margin-left: auto;
     margin-right: auto;
+}
+
+/*// asignaciones Sal*/
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(to bottom, #123D5A, #370744);
+    color: #ffffff;
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+    .search-container input {
+        margin-right: 10px;
+    }
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.table-container {
+    flex: 1;
+    margin-right: 20px;
+}
+
+    .table-container table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    .table-container th,
+    .table-container td {
+        padding: 8px;
+        text-align: left;
+        border: 1px solid #ffffff;
+    }
+
+    /* Asigna colores específicos a las filas de la tabla alternadamente */
+    .table-container tbody tr:nth-child(odd) {
+        background-color: #6F3956;
+    }
+
+    .table-container tbody tr:nth-child(even) {
+        background-color: #541E3B;
+    }
+
+.chart-container {
+    width: 40%;
+    max-width: 400px;
+}
+.comentario-busqueda {
+    font-size: small;
+    margin-top: 5px;
 }

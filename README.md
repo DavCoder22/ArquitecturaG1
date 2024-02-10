@@ -6,7 +6,7 @@ Este proyecto es una aplicación que utiliza bases de datos SQL Server junto con
 
 Para ejecutar este proyecto, asegúrate de tener Docker instalado en tu sistema. A continuación, sigue estos pasos:
 
-1. Descarga el archivo .rar proporcionado
+1. Descarga el archivo .zip proporcionado o clona el proyecto en la rama RamaFinal https://github.com/DavCoder22/ArquitecturaG1/tree/RamaFinal
 
 2. Ubicate en el directorio princial en donde se encuentre el archivo docker-compose.yml y ejecuta el siguiente comando para iniciar los servicios:
    ```bash
